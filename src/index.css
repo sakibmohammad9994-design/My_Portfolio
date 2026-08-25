@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --paper-bg: #F5F0E6;
+    --paper-subtle: #EBE4D5;
+    --paper-card: #FAF6EE;
+    --ink-black: #1C1917;
+    --ink-charcoal: #292524;
+    --ink-muted: #57534E;
+    --ink-faint: #A8A29E;
+    --pencil-line: #44403C;
+    --pencil-guide: rgba(68, 64, 60, 0.15);
+    --sketch-accent: #854D0E;
+    --sketch-terracotta: #9A3412;
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 17.5px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html {
+      font-size: 19px;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      font-size: 20.5px;
+    }
+  }
+
+  body {
+    background-color: #F5F0E6;
+    color: #1C1917;
+    font-family: 'Newsreader', 'Georgia', 'Cambria', serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.font-serif {
+  font-family: 'Newsreader', 'Georgia', 'Playfair Display', serif;
+}
+
+.font-sans {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.font-mono {
+  font-family: 'Courier New', Courier, 'JetBrains Mono', monospace;
+}
+
+/* Architectural Drafting & Sketchbook Paper Canvas */
+.paper-canvas {
+  background-color: #F5F0E6;
+  background-image: 
+    radial-gradient(#44403c 0.75px, transparent 0.75px),
+    linear-gradient(to right, rgba(68, 64, 60, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(68, 64, 60, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px, 48px 48px, 48px 48px;
+}
+
+.paper-sheet {
+  background-color: #FAF6EE;
+  border: 1.5px solid #292524;
+  box-shadow: 3px 4px 0px 0px rgba(41, 37, 36, 0.9);
+}
+
+.paper-sheet-subtle {
+  background-color: #FAF6EE;
+  border: 1px solid #78716C;
+  box-shadow: 2px 2px 0px 0px rgba(68, 64, 60, 0.3);
+}
+
+.sketch-border {
+  border: 1.5px solid #292524;
+  box-shadow: 2px 3px 0px 0px rgba(41, 37, 36, 0.85);
+}
+
+.sketch-border-thick {
+  border: 2px solid #1C1917;
+  box-shadow: 3px 4px 0px 0px #1C1917;
+}
+
+.sketch-card {
+  background-color: #FAF6EE;
+  border: 1.5px solid #292524;
+  box-shadow: 3px 4px 0px 0px #292524;
+}
+
+.sketch-tag {
+  background-color: #EBE4D5;
+  border: 1px solid #44403C;
+  color: #1C1917;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Custom Scrollbar for Hand-Drawn Theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EBE4D5;
+}
+::-webkit-scrollbar-thumb {
+  background: #78716C;
+  border-radius: 3px;
+  border: 1px solid #292524;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #44403C;
+}
+
+/* Perspective Container for 3D Camera Experience */
+.perspective-container {
+  perspective: 1200px;
+  perspective-origin: center center;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+@keyframes float-sketch {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(0.4deg); }
+}
+
+.animate-float-sketch {
+  animation: float-sketch 5s ease-in-out infinite;
+}
