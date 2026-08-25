@@ -136,7 +136,7 @@ export const AbdullahFullBodyPhoto: React.FC<AbdullahFullBodyPhotoProps> = ({
       <div className="absolute -top-2.5 right-8 w-20 h-5 bg-[#EBE4D5] border border-[#78716C]/60 rotate-2 shadow-xs z-10" />
 
       {/* Hand-Drawn Architectural Sketch Photo Frame */}
-      <div className="relative w-full sm:w-60 md:w-72 lg:w-80 aspect-[3/4] max-h-[340px] sm:max-h-[380px] lg:max-h-[420px] rounded-2xl overflow-hidden border-2 border-[#1C1917] bg-[#EBE4D5] shadow-[3px_4px_0px_0px_#1C1917] shrink-0 flex items-center justify-center p-1">
+      <div className="relative w-44 sm:w-56 md:w-64 aspect-[3/4] max-h-[280px] sm:max-h-[320px] md:max-h-[350px] rounded-2xl overflow-hidden border-2 border-[#1C1917] bg-[#EBE4D5] shadow-[3px_4px_0px_0px_#1C1917] shrink-0 flex items-center justify-center p-1">
         <div className="relative w-full h-full rounded-xl overflow-hidden bg-[#EBE4D5]">
           {!imageError ? (
             <img
@@ -148,8 +148,8 @@ export const AbdullahFullBodyPhoto: React.FC<AbdullahFullBodyPhotoProps> = ({
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-[#FAF6EE] to-[#EBE4D5]">
-              <div className="w-16 h-16 rounded-full border-2 border-[#1C1917] bg-[#FAF6EE] flex items-center justify-center mb-2 shadow-sm">
-                <User className="w-8 h-8 text-[#1C1917]" />
+              <div className="w-14 h-14 rounded-full border-2 border-[#1C1917] bg-[#FAF6EE] flex items-center justify-center mb-2 shadow-sm">
+                <User className="w-7 h-7 text-[#1C1917]" />
               </div>
               <span className="font-serif font-bold text-sm text-[#1C1917]">AS</span>
               <span className="text-xs font-mono text-[#78716C]">Chittagong, BD</span>
@@ -162,21 +162,21 @@ export const AbdullahFullBodyPhoto: React.FC<AbdullahFullBodyPhotoProps> = ({
       </div>
 
       {/* Description & Host Welcome */}
-      <div className="space-y-3 flex-1 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBE4D5] border border-[#292524] text-xs font-mono font-bold text-[#1C1917]">
-          <Sparkles className="w-4 h-4 text-[#854D0E]" />
+      <div className="space-y-2.5 flex-1 text-center sm:text-left">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EBE4D5] border border-[#292524] text-[11px] font-mono font-bold text-[#1C1917]">
+          <Sparkles className="w-3.5 h-3.5 text-[#854D0E]" />
           <span>PORTFOLIO ARCHITECT</span>
         </div>
 
-        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-[#1C1917] tracking-tight">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-[#1C1917] tracking-tight">
           Abdullah Al Sakib
         </h3>
 
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl font-serif text-[#57534E] leading-relaxed">
+        <p className="text-sm sm:text-base font-serif text-[#57534E] leading-relaxed">
           “Welcome to my interactive world. Feel free to explore my study, examine my live production systems in the workshop, inspect academic ledgers in the library, or dispatch a message.”
         </p>
 
-        <div className="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs sm:text-sm md:text-base font-mono text-[#78716C]">
+        <div className="pt-1 flex flex-wrap items-center justify-center sm:justify-start gap-2.5 text-xs sm:text-sm font-mono text-[#78716C]">
           <span>📍 Kalamia Bazar, Chittagong</span>
           <span>•</span>
           <span>🎓 IIUC 8th Semester</span>

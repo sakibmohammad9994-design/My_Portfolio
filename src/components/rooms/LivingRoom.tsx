@@ -18,27 +18,27 @@ export const LivingRoom: React.FC<LivingRoomProps> = ({
   return (
     <div className="w-full space-y-8 lg:space-y-10">
       {/* Hand-Drawn Room Header */}
-      <div className="p-6 sm:p-8 md:p-10 rounded-3xl bg-[#FAF6EE] border-2 border-[#1C1917] shadow-[5px_7px_0px_0px_#1C1917] relative overflow-hidden">
+      <div className="p-5 sm:p-6 lg:p-8 rounded-3xl bg-[#FAF6EE] border-2 border-[#1C1917] shadow-[4px_5px_0px_0px_#1C1917] relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2.5 mb-1.5">
-              <span className="text-xs sm:text-sm font-mono text-[#78716C] uppercase tracking-widest font-bold">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="text-xs font-mono text-[#78716C] uppercase tracking-widest font-bold">
                 LOCATION 01 · STUDY & LIVING QUARTERS
               </span>
-              <span className="px-3 py-1 rounded-full bg-[#EBE4D5] border border-[#292524] text-xs font-mono font-bold text-[#1C1917]">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#EBE4D5] border border-[#292524] text-[11px] font-mono font-bold text-[#1C1917]">
                 ABOUT ME
               </span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold font-serif text-[#1C1917] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-[#1C1917] tracking-tight">
               The Developer's Study
             </h2>
-            <p className="text-base sm:text-lg md:text-xl font-serif text-[#57534E] mt-1.5">
+            <p className="text-sm sm:text-base font-serif text-[#57534E] mt-1">
               Personal introduction, background, and engineering philosophy.
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 text-xs sm:text-sm md:text-base font-mono text-[#57534E] bg-[#EBE4D5] px-4 py-2.5 rounded-xl border border-[#292524] shrink-0">
-            <MapPin className="w-5 h-5 text-[#1C1917]" />
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#57534E] bg-[#EBE4D5] px-3.5 py-2 rounded-xl border border-[#292524] shrink-0">
+            <MapPin className="w-4 h-4 text-[#1C1917]" />
             <span>{PERSONAL_INFO.location}</span>
           </div>
         </div>
