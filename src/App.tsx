@@ -1,193 +1,176 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { SceneState, RoomId, Project, Certificate } from './types';
-import { HOUSE_ROOMS } from './data/portfolioData';
-import { AtmosphereCanvas } from './components/AtmosphereCanvas';
-import { ArrivalScene } from './components/scenes/ArrivalScene';
-import { DoorTransition } from './components/scenes/DoorTransition';
-import { RoomContainer } from './components/RoomContainer';
-import { NavigationHUD } from './components/NavigationHUD';
-import { HouseMapModal } from './components/HouseMapModal';
+import { ThreeDBackground } from './components/ThreeDBackground';
+import { ModernNavbar } from './components/ModernNavbar';
+import { CommandPalette } from './components/CommandPalette';
+import { HeroBento } from './components/sections/HeroBento';
+import { ProjectsBento } from './components/sections/ProjectsBento';
+import { SkillsBento } from './components/sections/SkillsBento';
+import { ExperienceEducationBento } from './components/sections/ExperienceEducationBento';
+import { AIResearchBento } from './components/sections/AIResearchBento';
+import { ContactBento } from './components/sections/ContactBento';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
-import { AccessibleViewModal } from './components/AccessibleViewModal';
+import { Project } from './types';
 import { sound } from './utils/sound';
+import { Sparkles, ArrowUp, Heart, Github, Globe } from 'lucide-react';
+import { PERSONAL_INFO } from './data/portfolioData';
 
 export function App() {
-  const [scene, setScene] = useState<SceneState>('arrival');
-  const [currentRoom, setCurrentRoom] = useState<RoomId>('living_room');
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const [isAccessibleViewOpen, setIsAccessibleViewOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
-  const [activeObjectDetails, setActiveObjectDetails] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState('about');
 
-  // Keyboard navigation & Shortcuts for exploration
+  // Audio initialization on first user click
+  const handleUserInteraction = () => {
+    sound.init();
+  };
+
+  // Scroll spy to highlight active section in floating navbar
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Map toggle
-      if (e.key === 'm' || e.key === 'M') {
-        setIsMapOpen((prev) => !prev);
-        sound.playClick();
-      }
-      // ESC closes modals
-      if (e.key === 'Escape') {
-        setIsMapOpen(false);
-        setSelectedProject(null);
-        setSelectedCertificate(null);
-        setActiveObjectDetails(null);
-      }
-      // Quick jump with numbers 1 to 9 if inside house
-      if (scene === 'house_explore') {
-        const num = parseInt(e.key, 10);
-        if (num >= 1 && num <= HOUSE_ROOMS.length) {
-          const targetRoom = HOUSE_ROOMS[num - 1];
-          if (targetRoom) {
-            setCurrentRoom(targetRoom.id);
-            sound.playClick();
+    const sections = ['about', 'projects', 'skills', 'experience', 'research', 'contact'];
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200;
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section);
+            break;
           }
         }
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [scene]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  // Audio start on first interaction
-  const ensureAudioInitialized = () => {
-    sound.init();
-  };
-
-  const handleCompleteDoorTransition = () => {
-    setScene('house_explore');
-    setCurrentRoom('living_room');
-  };
-
-  const handleStartDoorTransition = () => {
-    ensureAudioInitialized();
+  const scrollToTop = () => {
     sound.playClick();
-    setScene('house_explore');
-    setCurrentRoom('living_room');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSkipIntro = () => {
-    ensureAudioInitialized();
+  const scrollToSection = (id: string) => {
     sound.playClick();
-    setScene('house_explore');
-    setCurrentRoom('living_room');
-  };
-
-  const handleReturnToArrival = () => {
-    sound.playClick();
-    setScene('arrival');
-  };
-
-  const handleNavigateRoom = (roomId: RoomId) => {
-    sound.playClick();
-    setCurrentRoom(roomId);
-  };
-
-  const handleFastTravel = (roomId: RoomId) => {
-    ensureAudioInitialized();
-    setCurrentRoom(roomId);
-    setScene('house_explore');
+    const el = document.getElementById(id);
+    if (el) {
+      const navOffset = 90;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
     <div
-      onClick={ensureAudioInitialized}
-      className="relative min-h-screen paper-canvas text-[#1C1917] selection:bg-[#EBE4D5] selection:text-[#1C1917]"
+      onClick={handleUserInteraction}
+      className="relative min-h-screen bg-[#07070a] text-slate-100 overflow-x-hidden selection:bg-indigo-500/30 selection:text-white"
     >
-      {/* Dynamic Hand-Drawn Paper Particle & Drafting Background */}
-      <AtmosphereCanvas scene={scene} currentRoom={currentRoom} />
+      {/* 3D WebGL Particle & Spatial Geometry Background */}
+      <ThreeDBackground />
 
-      {/* Primary Spatial Scenes */}
-      <AnimatePresence mode="wait">
-        {scene === 'arrival' && (
-          <motion.div
-            key="arrival"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full"
-          >
-            <ArrivalScene
-              onEnterHouse={handleStartDoorTransition}
-              onOpenMap={() => setIsMapOpen(true)}
-              onSkipIntro={handleSkipIntro}
-            />
-          </motion.div>
-        )}
-
-        {scene === 'door_transition' && (
-          <motion.div
-            key="door_transition"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full"
-          >
-            <DoorTransition
-              onComplete={handleCompleteDoorTransition}
-              onCancel={handleReturnToArrival}
-            />
-          </motion.div>
-        )}
-
-        {scene === 'house_explore' && (
-          <motion.div
-            key="house_explore"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full relative"
-          >
-            {/* Minimalist Top & Bottom Sketchbook Controls */}
-            <NavigationHUD
-              currentRoomId={currentRoom}
-              onNavigateRoom={handleNavigateRoom}
-              onOpenMap={() => setIsMapOpen(true)}
-              onOpenAccessibleView={() => setIsAccessibleViewOpen(true)}
-              onReturnToArrival={handleReturnToArrival}
-              activeObjectDetails={activeObjectDetails}
-              onClearObjectDetails={() => setActiveObjectDetails(null)}
-            />
-
-            {/* Room Canvas Container */}
-            <RoomContainer
-              currentRoom={currentRoom}
-              onNavigateRoom={handleNavigateRoom}
-              onSelectProject={setSelectedProject}
-              onSelectCertificate={setSelectedCertificate}
-              onObjectClick={setActiveObjectDetails}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Interactive Hand-Drawn Architectural Floorplan Map Modal */}
-      <HouseMapModal
-        isOpen={isMapOpen}
-        onClose={() => setIsMapOpen(false)}
-        currentRoom={currentRoom}
-        onSelectRoom={(roomId) => {
-          if (scene !== 'house_explore') {
-            setScene('house_explore');
-          }
-          handleNavigateRoom(roomId);
-        }}
+      {/* Floating Glassmorphic Top Navbar */}
+      <ModernNavbar
+        activeSection={activeSection}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
 
-      {/* Accessible Full Portfolio Scannable Document View Modal */}
-      <AccessibleViewModal
-        isOpen={isAccessibleViewOpen}
-        onClose={() => setIsAccessibleViewOpen(false)}
+      {/* Main Single-Page Bento Grid Flow */}
+      <main className="relative z-10 space-y-12">
+        <HeroBento
+          onOpenContact={() => scrollToSection('contact')}
+          onOpenProjects={() => scrollToSection('projects')}
+        />
+
+        <ProjectsBento
+          onSelectProject={(project) => setSelectedProject(project)}
+        />
+
+        <SkillsBento />
+
+        <ExperienceEducationBento />
+
+        <AIResearchBento />
+
+        <ContactBento />
+      </main>
+
+      {/* Sleek Modern Footer */}
+      <footer className="relative z-10 border-t border-white/10 bg-[#07070a]/80 backdrop-blur-xl py-12 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-slate-400">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-500/40 p-0.5 bg-gradient-to-tr from-cyan-500 to-indigo-600">
+              <img
+                src="/abdullah.jpg"
+                alt="Sakib"
+                className="w-full h-full object-cover object-top rounded-full"
+              />
+            </div>
+            <div>
+              <span className="font-bold text-white block">
+                {PERSONAL_INFO.name}
+              </span>
+              <span className="text-[11px] text-slate-500">
+                Architected with React 19, Three.js & Tailwind CSS
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => scrollToSection('about')}
+              className="hover:text-cyan-400 transition-colors cursor-pointer"
+            >
+              About
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="hover:text-cyan-400 transition-colors cursor-pointer"
+            >
+              Projects
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => scrollToSection('skills')}
+              className="hover:text-cyan-400 transition-colors cursor-pointer"
+            >
+              Skills
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="hover:text-cyan-400 transition-colors cursor-pointer"
+            >
+              Contact
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={scrollToTop}
+              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+              title="Scroll to Top"
+            >
+              <span>Top</span>
+              <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />
+            </button>
+          </div>
+        </div>
+      </footer>
+
+      {/* Spotlight Command Palette (Ctrl+K / Cmd+K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectProject={(project) => setSelectedProject(project)}
       />
 
-      {/* Project Blueprint Inspection Sheet */}
+      {/* Project Blueprint Modal */}
       <ProjectDetailModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}

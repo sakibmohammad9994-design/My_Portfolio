@@ -2,121 +2,167 @@
 
 @layer base {
   :root {
-    --paper-bg: #F5F0E6;
-    --paper-subtle: #EBE4D5;
-    --paper-card: #FAF6EE;
-    --ink-black: #1C1917;
-    --ink-charcoal: #292524;
-    --ink-muted: #57534E;
-    --ink-faint: #A8A29E;
-    --pencil-line: #44403C;
-    --pencil-guide: rgba(68, 64, 60, 0.15);
-    --sketch-accent: #854D0E;
-    --sketch-terracotta: #9A3412;
+    --bg-primary: #07070a;
+    --bg-secondary: #0d0d14;
+    --bg-card: rgba(18, 18, 28, 0.65);
+    --bg-card-hover: rgba(26, 26, 40, 0.85);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.18);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-cyan: #06b6d4;
+    --accent-indigo: #6366f1;
+    --accent-violet: #8b5cf6;
+    --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
   }
 
   html {
-    font-size: 16px;
+    scroll-behavior: smooth;
+    color-scheme: dark;
   }
 
   body {
-    background-color: #F5F0E6;
-    color: #1C1917;
-    font-family: 'Newsreader', 'Georgia', 'Cambria', serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    selection-background-color: rgba(99, 102, 241, 0.35);
+    selection-color: #ffffff;
   }
 }
 
-.font-serif {
-  font-family: 'Newsreader', 'Georgia', 'Playfair Display', serif;
-}
-
-.font-sans {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
 .font-mono {
-  font-family: 'Courier New', Courier, 'JetBrains Mono', monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', Courier, monospace;
 }
 
-/* Architectural Drafting & Sketchbook Paper Canvas */
-.paper-canvas {
-  background-color: #F5F0E6;
-  background-image: 
-    radial-gradient(#44403c 0.75px, transparent 0.75px),
-    linear-gradient(to right, rgba(68, 64, 60, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(68, 64, 60, 0.04) 1px, transparent 1px);
-  background-size: 24px 24px, 48px 48px, 48px 48px;
+.font-serif {
+  font-family: 'Newsreader', 'Georgia', serif;
 }
 
-.paper-sheet {
-  background-color: #FAF6EE;
-  border: 1.5px solid #292524;
-  box-shadow: 3px 4px 0px 0px rgba(41, 37, 36, 0.9);
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(15, 15, 24, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.5);
 }
 
-.paper-sheet-subtle {
-  background-color: #FAF6EE;
-  border: 1px solid #78716C;
-  box-shadow: 2px 2px 0px 0px rgba(68, 64, 60, 0.3);
+.glass-panel-interactive {
+  background: rgba(15, 15, 24, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sketch-border {
-  border: 1.5px solid #292524;
-  box-shadow: 2px 3px 0px 0px rgba(41, 37, 36, 0.85);
+.glass-panel-interactive:hover {
+  background: rgba(22, 22, 36, 0.8);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 48px -12px rgba(99, 102, 241, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
-.sketch-border-thick {
-  border: 2px solid #1C1917;
-  box-shadow: 3px 4px 0px 0px #1C1917;
+/* Gradient Text */
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.sketch-card {
-  background-color: #FAF6EE;
-  border: 1.5px solid #292524;
-  box-shadow: 3px 4px 0px 0px #292524;
+.gradient-text-violet {
+  background: linear-gradient(135deg, #c084fc 0%, #818cf8 50%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.sketch-tag {
-  background-color: #EBE4D5;
-  border: 1px solid #44403C;
-  color: #1C1917;
-  font-family: 'Courier New', Courier, monospace;
+.gradient-text-emerald {
+  background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Custom Scrollbar for Hand-Drawn Theme */
+/* Glowing Ambient Orbs */
+.glow-orb-cyan {
+  position: absolute;
+  filter: blur(120px);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.glow-orb-violet {
+  position: absolute;
+  filter: blur(140px);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.glow-orb-indigo {
+  position: absolute;
+  filter: blur(130px);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Custom Sleek Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #EBE4D5;
+  background: #07070a;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #78716C;
-  border-radius: 3px;
-  border: 1px solid #292524;
+  background: #1e1e2f;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #44403C;
+  background: #2d2d44;
 }
 
-/* Perspective Container for 3D Camera Experience */
-.perspective-container {
-  perspective: 1200px;
-  perspective-origin: center center;
+/* Spotlight Card Hover Effect Container */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
 }
 
-.preserve-3d {
-  transform-style: preserve-3d;
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 1;
 }
 
-@keyframes float-sketch {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-4px) rotate(0.4deg); }
+.spotlight-card:hover::before {
+  opacity: 1;
 }
 
-.animate-float-sketch {
-  animation: float-sketch 5s ease-in-out infinite;
+/* Animation utilities */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 4s ease-in-out infinite;
 }
