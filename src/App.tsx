@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { ThreeDBackground } from './components/ThreeDBackground';
-import { ModernNavbar } from './components/ModernNavbar';
+import { CinematicPortraitHero } from './components/cinematic/CinematicPortraitHero';
+import { CinematicSectionNav } from './components/cinematic/CinematicSectionNav';
+import { CinematicAboutSection } from './components/cinematic/CinematicAboutSection';
+import { CinematicProjectsSection } from './components/cinematic/CinematicProjectsSection';
+import { CinematicTimelineSection } from './components/cinematic/CinematicTimelineSection';
+import { CinematicSkillsSection } from './components/cinematic/CinematicSkillsSection';
+import { CinematicAIResearchSection } from './components/cinematic/CinematicAIResearchSection';
+import { CinematicContactSection } from './components/cinematic/CinematicContactSection';
 import { CommandPalette } from './components/CommandPalette';
-import { HeroBento } from './components/sections/HeroBento';
-import { ProjectsBento } from './components/sections/ProjectsBento';
-import { SkillsBento } from './components/sections/SkillsBento';
-import { ExperienceEducationBento } from './components/sections/ExperienceEducationBento';
-import { AIResearchBento } from './components/sections/AIResearchBento';
-import { ContactBento } from './components/sections/ContactBento';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { Project } from './types';
 import { sound } from './utils/sound';
-import { Sparkles, ArrowUp, Heart, Github, Globe } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { PERSONAL_INFO } from './data/portfolioData';
 
 export function App() {
+  const [activeSection, setActiveSection] = useState('hero');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeSection, setActiveSection] = useState('about');
 
-  // Audio initialization on first user click
   const handleUserInteraction = () => {
     sound.init();
   };
 
-  // Scroll spy to highlight active section in floating navbar
+  // Scroll spy to highlight active chapter
   useEffect(() => {
-    const sections = ['about', 'projects', 'skills', 'experience', 'research', 'contact'];
+    const sections = ['hero', 'about', 'works', 'journey', 'skills', 'ailab', 'contact'];
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 300;
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -46,16 +45,15 @@ export function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    sound.playClick();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const scrollToSection = (id: string) => {
     sound.playClick();
+    if (id === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
-      const navOffset = 90;
+      const navOffset = 80;
       const elementPosition = el.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
       window.scrollTo({
@@ -68,96 +66,76 @@ export function App() {
   return (
     <div
       onClick={handleUserInteraction}
-      className="relative min-h-screen bg-[#07070a] text-slate-100 overflow-x-hidden selection:bg-indigo-500/30 selection:text-white"
+      className="relative min-h-screen bg-[#050508] text-slate-100 overflow-x-hidden selection:bg-[#d4af37]/30 selection:text-white"
     >
-      {/* 3D WebGL Particle & Spatial Geometry Background */}
-      <ThreeDBackground />
-
-      {/* Floating Glassmorphic Top Navbar */}
-      <ModernNavbar
+      {/* Top Luxury Navigation & Chapter Drawer */}
+      <CinematicSectionNav
         activeSection={activeSection}
+        onSelectSection={scrollToSection}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
 
-      {/* Main Single-Page Bento Grid Flow */}
-      <main className="relative z-10 space-y-12">
-        <HeroBento
-          onOpenContact={() => scrollToSection('contact')}
-          onOpenProjects={() => scrollToSection('projects')}
+      {/* Main Single-Page Cinematic Flow */}
+      <main className="relative z-10 space-y-0">
+        <div id="hero">
+          <CinematicPortraitHero
+            onExploreClick={() => scrollToSection('about')}
+          />
+        </div>
+
+        <CinematicAboutSection
+          onSelectSection={scrollToSection}
         />
 
-        <ProjectsBento
-          onSelectProject={(project) => setSelectedProject(project)}
+        <CinematicProjectsSection
+          onSelectProject={(p) => setSelectedProject(p)}
         />
 
-        <SkillsBento />
+        <CinematicTimelineSection />
 
-        <ExperienceEducationBento />
+        <CinematicSkillsSection />
 
-        <AIResearchBento />
+        <CinematicAIResearchSection />
 
-        <ContactBento />
+        <CinematicContactSection />
       </main>
 
-      {/* Sleek Modern Footer */}
-      <footer className="relative z-10 border-t border-white/10 bg-[#07070a]/80 backdrop-blur-xl py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-slate-400">
+      {/* Luxury Minimalist Footer */}
+      <footer className="relative z-10 border-t border-white/10 bg-[#050508] py-12 px-6 sm:px-12 lg:px-16">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs font-mono text-slate-500">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-500/40 p-0.5 bg-gradient-to-tr from-cyan-500 to-indigo-600">
-              <img
-                src="/abdullah.jpg"
-                alt="Sakib"
-                className="w-full h-full object-cover object-top rounded-full"
-              />
-            </div>
-            <div>
-              <span className="font-bold text-white block">
-                {PERSONAL_INFO.name}
-              </span>
-              <span className="text-[11px] text-slate-500">
-                Architected with React 19, Three.js & Tailwind CSS
-              </span>
-            </div>
+            <span className="text-[#d4af37] font-bold tracking-widest uppercase">
+              {PERSONAL_INFO.name}
+            </span>
+            <span>•</span>
+            <span>Full-Stack Developer & AI Enthusiast</span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <button
               onClick={() => scrollToSection('about')}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
+              className="hover:text-[#d4af37] transition-colors cursor-pointer"
             >
               About
             </button>
-            <span>•</span>
             <button
-              onClick={() => scrollToSection('projects')}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
+              onClick={() => scrollToSection('works')}
+              className="hover:text-[#d4af37] transition-colors cursor-pointer"
             >
-              Projects
+              Works
             </button>
-            <span>•</span>
-            <button
-              onClick={() => scrollToSection('skills')}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
-            >
-              Skills
-            </button>
-            <span>•</span>
             <button
               onClick={() => scrollToSection('contact')}
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
+              className="hover:text-[#d4af37] transition-colors cursor-pointer"
             >
               Contact
             </button>
-          </div>
-
-          <div className="flex items-center gap-3">
             <button
-              onClick={scrollToTop}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
-              title="Scroll to Top"
+              onClick={() => scrollToSection('hero')}
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white hover:text-[#d4af37] transition-colors cursor-pointer flex items-center gap-1"
+              title="Back to Top"
             >
-              <span>Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />
+              <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -167,7 +145,7 @@ export function App() {
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}
-        onSelectProject={(project) => setSelectedProject(project)}
+        onSelectProject={(p) => setSelectedProject(p)}
       />
 
       {/* Project Blueprint Modal */}
