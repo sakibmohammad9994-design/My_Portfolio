@@ -1,105 +1,52 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Inter', sans-serif;
+}
+
 @layer base {
-  :root {
-    --bg-main: #040407;
-    --bg-surface: #0a0a10;
-    --bg-card: rgba(14, 14, 22, 0.75);
-    --gold-primary: #d4af37;
-    --gold-subtle: rgba(212, 175, 55, 0.2);
-    --gold-glow: rgba(212, 175, 55, 0.15);
-    --cyan-accent: #38bdf8;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    color-scheme: dark;
-    background-color: #040407;
-  }
-
   body {
-    background-color: #040407;
-    color: #f8fafc;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-[#09090b] text-zinc-300 antialiased overflow-x-hidden;
+    font-family: 'Inter', sans-serif;
   }
 }
 
-.font-serif {
-  font-family: 'Playfair Display', 'Georgia', serif;
+@layer components {
+  /* Solt Wagner / Framer Style Glass Panels */
+  .glass-card {
+    @apply bg-white/[0.02] border border-white/[0.05] backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply bg-white/[0.04] border-white/[0.1] shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+  }
+
+  /* Sleek Pill Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-zinc-100 text-zinc-900 font-medium transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/5 text-zinc-200 border border-white/10 font-medium transition-all duration-300 hover:bg-white/10 hover:scale-105 active:scale-95;
+  }
+
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60;
+  }
 }
 
-.font-mono {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-}
-
-/* 2026 Studio Lighting & Glow Effects */
-.studio-gold-glow {
-  position: absolute;
-  filter: blur(150px);
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.studio-cyan-glow {
-  position: absolute;
-  filter: blur(140px);
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.studio-purple-glow {
-  position: absolute;
-  filter: blur(160px);
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Glassmorphism Panels */
-.glass-2026 {
-  background: rgba(12, 12, 20, 0.7);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
-}
-
-.glass-2026-hover {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-2026-hover:hover {
-  background: rgba(18, 18, 28, 0.85);
-  border-color: rgba(212, 175, 55, 0.35);
-  box-shadow: 0 30px 70px -15px rgba(212, 175, 55, 0.12);
-  transform: translateY(-2px);
-}
-
-/* Vignette Masking for Portraits */
-.portrait-vignette {
-  mask-image: radial-gradient(circle at 50% 40%, black 55%, transparent 95%);
-  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 55%, transparent 95%);
-}
-
-/* Sleek Minimalist Custom Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #040407;
+  background: #09090b; 
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #1e1e2d;
-  border-radius: 2px;
+  background: #27272a; 
+  border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+  background: #3f3f46; 
 }

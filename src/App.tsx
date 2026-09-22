@@ -1,167 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { CinematicSectionNav } from './components/cinematic/CinematicSectionNav';
-import { CinematicSlideController } from './components/cinematic/CinematicSlideController';
-import { SlideHero } from './components/slides/SlideHero';
-import { SlideAbout } from './components/slides/SlideAbout';
-import { SlideProjects } from './components/slides/SlideProjects';
-import { SlideSkills } from './components/slides/SlideSkills';
-import { SlideAILab } from './components/slides/SlideAILab';
-import { SlideContact } from './components/slides/SlideContact';
-import { AskSakibAIModal } from './components/AskSakibAIModal';
-import { CommandPalette } from './components/CommandPalette';
-import { ProjectDetailModal } from './components/ProjectDetailModal';
-import { Project } from './types';
-import { sound } from './utils/sound';
+import React from 'react';
+import Navbar from './components/Navbar';
+import HeroSection from './components/sections/HeroSection';
+import AboutSection from './components/sections/AboutSection';
+import ProjectsSection from './components/sections/ProjectsSection';
+import SkillsSection from './components/sections/SkillsSection';
+import ContactSection from './components/sections/ContactSection';
+import Footer from './components/Footer';
 
-export function App() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAIOpen, setIsAIOpen] = useState(false);
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  const totalSlides = 6;
-  const slideIds = ['hero', 'about', 'works', 'skills', 'ailab', 'contact'];
-
-  const handleUserInteraction = () => {
-    sound.init();
-  };
-
-  const nextSlide = () => {
-    sound.playClick();
-    setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
-  };
-
-  const prevSlide = () => {
-    sound.playClick();
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
-  };
-
-  const goToSlide = (index: number) => {
-    sound.playClick();
-    setCurrentSlide(index);
-  };
-
-  const goToSlideById = (id: string) => {
-    const idx = slideIds.indexOf(id);
-    if (idx !== -1) {
-      goToSlide(idx);
-    }
-  };
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't capture when typing in an input
-      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) {
-        return;
-      }
-
-      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-        e.preventDefault();
-        setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
-        sound.playClick();
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault();
-        setCurrentSlide((prev) => Math.max(prev - 1, 0));
-        sound.playClick();
-      }
-      // Number keys 1-6
-      const num = parseInt(e.key, 10);
-      if (num >= 1 && num <= totalSlides) {
-        setCurrentSlide(num - 1);
-        sound.playClick();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
+function App() {
   return (
-    <div
-      onClick={handleUserInteraction}
-      className="relative w-full min-h-screen bg-[#040407] text-slate-100 overflow-hidden select-none selection:bg-[#d4af37]/30 selection:text-white"
-    >
-      {/* Top Luxury Navigation Header */}
-      <CinematicSectionNav
-        activeSection={slideIds[currentSlide]}
-        onSelectSection={goToSlideById}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-      />
+    <div className="bg-[#09090b] min-h-screen text-zinc-200 selection:bg-zinc-800 selection:text-white font-sans overflow-x-hidden relative">
+      {/* Background Noise/Grain Overlay */}
+      <div 
+        className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
+      ></div>
 
-      {/* Main Full-Screen Cinematic Slide Stage */}
-      <div className="relative w-full min-h-screen overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, scale: 0.98, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: -15 }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            className="w-full min-h-screen"
-          >
-            {currentSlide === 0 && (
-              <SlideHero
-                onNext={nextSlide}
-                onOpenContact={() => goToSlide(5)}
-              />
-            )}
-            {currentSlide === 1 && (
-              <SlideAbout
-                onGoTo={goToSlide}
-              />
-            )}
-            {currentSlide === 2 && (
-              <SlideProjects
-                onSelectProject={(p) => setSelectedProject(p)}
-              />
-            )}
-            {currentSlide === 3 && (
-              <SlideSkills />
-            )}
-            {currentSlide === 4 && (
-              <SlideAILab
-                onOpenAI={() => setIsAIOpen(true)}
-              />
-            )}
-            {currentSlide === 5 && (
-              <SlideContact />
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {/* Subtle Glowing Background Orbs */}
+      <div className="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-zinc-800/20 blur-[120px] pointer-events-none z-0"></div>
+      <div className="fixed bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] rounded-full bg-zinc-800/10 blur-[120px] pointer-events-none z-0"></div>
 
-      {/* Floating Slide Navigation Controller */}
-      <CinematicSlideController
-        currentSlide={currentSlide}
-        totalSlides={totalSlides}
-        onNext={nextSlide}
-        onPrev={prevSlide}
-        onGoTo={goToSlide}
-        onOpenAI={() => setIsAIOpen(true)}
-      />
+      <Navbar />
 
-      {/* Live "Ask Sakib AI" Assistant Modal */}
-      <AskSakibAIModal
-        isOpen={isAIOpen}
-        onClose={() => setIsAIOpen(false)}
-        onSelectProject={(p) => setSelectedProject(p)}
-      />
+      <main className="relative z-10 flex flex-col items-center">
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ContactSection />
+      </main>
 
-      {/* Spotlight Command Palette (Ctrl+K / Cmd+K) */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onSelectProject={(p) => setSelectedProject(p)}
-      />
-
-      {/* Project Blueprint Modal */}
-      <ProjectDetailModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      <Footer />
     </div>
   );
 }
