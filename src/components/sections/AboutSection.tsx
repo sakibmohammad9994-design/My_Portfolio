@@ -32,7 +32,7 @@ const AboutSection = () => {
           <Sparkles className="w-8 h-8 text-white/40 mb-6" />
           <h3 className="text-xl font-semibold text-white mb-4">My Story</h3>
           <p className="text-zinc-400 leading-relaxed mb-6">
-            {PERSONAL_INFO.bio}
+            {PERSONAL_INFO.shortBio}
           </p>
           <div className="flex items-center gap-4 text-sm text-zinc-300">
             <div className="flex items-center gap-2">

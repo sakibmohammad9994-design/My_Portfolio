@@ -44,13 +44,13 @@ const ProjectsSection = () => {
                   {project.title}
                 </h3>
                 <div className="flex gap-2">
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-400 transition-colors">
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-400 transition-colors">
                       <Github className="w-4 h-4" />
                     </a>
                   )}
-                  {project.demo && (
-                    <a href={project.demo} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform">
+                  {project.liveUrl && (
+                    <a href={project.liveUrl} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform">
                       <ArrowUpRight className="w-4 h-4" />
                     </a>
                   )}
@@ -58,11 +58,11 @@ const ProjectsSection = () => {
               </div>
               
               <p className="text-zinc-400 text-sm leading-relaxed mb-6 flex-grow">
-                {project.description}
+                {project.description[0]}
               </p>
               
               <div className="flex flex-wrap gap-2 mt-auto">
-                {project.technologies.map(tech => (
+                {project.techStack.map(tech => (
                   <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-md bg-white/5 text-zinc-300 border border-white/5">
                     {tech}
                   </span>

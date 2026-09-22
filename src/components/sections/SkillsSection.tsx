@@ -32,8 +32,8 @@ const SkillsSection = () => {
               {skillGroup.category}
             </h3>
             <ul className="space-y-3 flex flex-wrap gap-2">
-              {skillGroup.items.map(skill => (
-                <li key={skill} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-colors cursor-default">
+              {skillGroup.skills.map(skill => (
+                <li key={skill.name} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-sm text-zinc-300 hover:bg-white/10 hover:text-white transition-colors cursor-default">
                   {skill}
                 </li>
               ))}

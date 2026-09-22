@@ -24,15 +24,15 @@ const ContactSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
-          <a href={`mailto:${PERSONAL_INFO.email}`} className="btn-primary w-full sm:w-auto text-lg px-8 py-4">
+          <a href={`mailto:${PERSONAL_INFO.emailPrimary}`} className="btn-primary w-full sm:w-auto text-lg px-8 py-4">
             <Mail className="w-5 h-5 mr-2" />
             Send me an email
           </a>
           <div className="flex gap-4">
-            <a href={PERSONAL_INFO.github} target="_blank" rel="noreferrer" className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-300 transition-all border border-white/10">
+            <a href={(PERSONAL_INFO.socials.find(s => s.name === 'GitHub')?.url || '')} target="_blank" rel="noreferrer" className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-300 transition-all border border-white/10">
               <Github className="w-6 h-6" />
             </a>
-            <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noreferrer" className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-300 transition-all border border-white/10">
+            <a href={(PERSONAL_INFO.socials.find(s => s.name.includes('LinkedIn'))?.url || '')} target="_blank" rel="noreferrer" className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white text-zinc-300 transition-all border border-white/10">
               <Linkedin className="w-6 h-6" />
             </a>
           </div>
