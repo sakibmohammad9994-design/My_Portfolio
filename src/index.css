@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    --bg-main: #050508;
+    --bg-main: #040407;
     --bg-surface: #0a0a10;
-    --bg-card: rgba(15, 15, 23, 0.7);
+    --bg-card: rgba(14, 14, 22, 0.75);
     --gold-primary: #d4af37;
     --gold-subtle: rgba(212, 175, 55, 0.2);
     --gold-glow: rgba(212, 175, 55, 0.15);
@@ -17,11 +17,11 @@
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
-    background-color: #050508;
+    background-color: #040407;
   }
 
   body {
-    background-color: #050508;
+    background-color: #040407;
     color: #f8fafc;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
@@ -31,74 +31,73 @@
 }
 
 .font-serif {
-  font-family: 'Playfair Display', 'Georgia', 'Newsreader', serif;
+  font-family: 'Playfair Display', 'Georgia', serif;
 }
 
 .font-mono {
   font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
 
-/* Luxury Cinematic Vignette & Edge Fade */
+/* 2026 Studio Lighting & Glow Effects */
+.studio-gold-glow {
+  position: absolute;
+  filter: blur(150px);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.studio-cyan-glow {
+  position: absolute;
+  filter: blur(140px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.studio-purple-glow {
+  position: absolute;
+  filter: blur(160px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Glassmorphism Panels */
+.glass-2026 {
+  background: rgba(12, 12, 20, 0.7);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+}
+
+.glass-2026-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-2026-hover:hover {
+  background: rgba(18, 18, 28, 0.85);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 30px 70px -15px rgba(212, 175, 55, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Vignette Masking for Portraits */
 .portrait-vignette {
   mask-image: radial-gradient(circle at 50% 40%, black 55%, transparent 95%);
   -webkit-mask-image: radial-gradient(circle at 50% 40%, black 55%, transparent 95%);
 }
 
-.portrait-bottom-fade {
-  mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-}
-
-/* Luxury Gold & Ambient Lighting Glows */
-.gold-glow-orb {
-  position: absolute;
-  filter: blur(140px);
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.cyan-glow-orb {
-  position: absolute;
-  filter: blur(130px);
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Subtle HUD Geometric Line Guides */
-.hud-grid {
-  background-image: 
-    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 32px 32px, 96px 96px, 96px 96px;
-}
-
-/* Glassmorphic Luxury Panels */
-.luxury-panel {
-  background: rgba(12, 12, 18, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8);
-}
-
-.luxury-panel:hover {
-  border-color: rgba(212, 175, 55, 0.3);
-  box-shadow: 0 25px 60px -15px rgba(212, 175, 55, 0.1);
-}
-
 /* Sleek Minimalist Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050508;
+  background: #040407;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #1e1e2d;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
