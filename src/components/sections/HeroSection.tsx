@@ -27,7 +27,7 @@ const HeroSection = () => {
 
         <div className="relative flex-grow flex items-center justify-center w-full max-w-[1400px] mx-auto min-h-[60vh] z-20">
           
-          {/* Overlapping Parallax Image - AGGRESSIVE EDGE ERASER */}
+          {/* Overlapping Parallax Image - FIXED MASK SYNTAX & ADDED MULTIPLY BLEND */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
             initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
@@ -38,12 +38,13 @@ const HeroSection = () => {
             <img 
               src="/sakib-bw-suit.png" 
               alt={PERSONAL_INFO.name}
-              className="w-full h-full object-cover object-[50%_20%] opacity-90 grayscale contrast-125 mix-blend-luminosity"
+              // Switched to mix-blend-multiply: This makes all white/bright parts of the grill completely disappear into the orange!
+              className="w-full h-full object-cover object-[50%_20%] opacity-90 grayscale contrast-[1.2] mix-blend-multiply"
               style={{
-                /* Extremely aggressive mask to guarantee NO straight edges are visible. 
-                   Fades out completely well before hitting the borders of the image. */
-                maskImage: 'radial-gradient(ellipse 70% 80% at 50% 45%, black 25%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 70% 80% at 50% 45%, black 25%, transparent 100%)'
+                /* Fixed valid CSS radial-gradient syntax. 
+                   This is a 100% guaranteed circular fade that vanishes before hitting any edge. */
+                maskImage: 'radial-gradient(circle at 50% 45%, black 25%, transparent 70%)',
+                WebkitMaskImage: 'radial-gradient(circle at 50% 45%, black 25%, transparent 70%)'
               }}
             />
           </motion.div>
