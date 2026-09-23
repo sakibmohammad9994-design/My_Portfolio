@@ -2,13 +2,12 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 
-const customEase = [0.16, 1, 0.3, 1]; // Ultra-smooth Apple-style easing
+const customEase = [0.16, 1, 0.3, 1];
 
 const HeroSection = () => {
   const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef(null);
   
-  // Parallax setup
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -22,33 +21,34 @@ const HeroSection = () => {
     <section id="hero" className="w-full min-h-screen flex flex-col relative z-10" ref={containerRef}>
       <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-6 lg:px-16 relative overflow-hidden">
         
-        {/* Deep Abstract Glows */}
-        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/50 via-transparent to-transparent pointer-events-none z-10"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5e00]/30 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        {/* Background Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent pointer-events-none z-10"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#ff5e00]/20 blur-[150px] rounded-full pointer-events-none z-0"></div>
 
         <div className="relative flex-grow flex items-center justify-center w-full max-w-[1400px] mx-auto min-h-[60vh] z-20">
           
-          {/* Overlapping Parallax Image - PERFECT RADIAL MASK TO REMOVE BOX EDGES */}
+          {/* Overlapping Parallax Image - AGGRESSIVE EDGE ERASER */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
-            initial={{ opacity: 0, scale: 1.25, filter: "blur(20px)" }}
+            initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 2.2, ease: customEase }}
-            className="absolute right-0 bottom-0 w-full md:w-[50%] lg:w-[45%] h-[90%] lg:h-[105%] z-10"
+            transition={{ duration: 2, ease: customEase }}
+            className="absolute right-0 lg:-right-10 bottom-0 w-full md:w-[65%] lg:w-[60%] h-full z-10 flex items-end justify-end"
           >
             <img 
               src="/sakib-bw-suit.png" 
               alt={PERSONAL_INFO.name}
-              className="w-full h-full object-cover object-[70%_20%] opacity-90 grayscale contrast-125 mix-blend-luminosity"
+              className="w-full h-full object-cover object-[50%_20%] opacity-90 grayscale contrast-125 mix-blend-luminosity"
               style={{
-                // Beautiful radial vignette mask - 100% transparent at the edges, fully solid in the middle
-                maskImage: 'radial-gradient(ellipse 95% 95% at 55% 45%, black 40%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 95% 95% at 55% 45%, black 40%, transparent 100%)'
+                /* Extremely aggressive mask to guarantee NO straight edges are visible. 
+                   Fades out completely well before hitting the borders of the image. */
+                maskImage: 'radial-gradient(ellipse 70% 80% at 50% 45%, black 25%, transparent 100%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 70% 80% at 50% 45%, black 25%, transparent 100%)'
               }}
             />
           </motion.div>
 
-          {/* Overlapping Typography (Grid Breaker) */}
+          {/* Typography */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yText }}
             className="absolute left-0 lg:left-10 w-full lg:w-[65%] z-30 flex flex-col items-start pointer-events-none"
@@ -102,7 +102,7 @@ const HeroSection = () => {
 
         </div>
 
-        {/* Bottom Stats Inside Hero */}
+        {/* Bottom Stats */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
