@@ -81,22 +81,28 @@ const AboutSection = () => {
       </div>
 
       {/* Grid of Images / Bio info */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        {/* Main Photo Card (Tall) */}
+        {/* Main Photo (Floating with Soft Edges instead of a box) */}
         <motion.div 
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, delay: 0.2, ease: customEase }}
-          className="md:col-span-1 rounded-[32px] overflow-hidden aspect-[3/4] relative group"
+          className="md:col-span-1 aspect-[3/4] relative group flex items-center justify-center"
         >
           <img 
             src="/sakib-outdoors-1.png" 
             alt="Sakib outdoors" 
             className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+            style={{
+              /* Applies the exact same composite linear mask trick as the hero section to remove the box edges */
+              maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+              WebkitMaskComposite: 'source-in',
+              maskComposite: 'intersect'
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80"></div>
         </motion.div>
 
         {/* Bio Text Card */}
