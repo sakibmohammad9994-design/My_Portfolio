@@ -2,37 +2,56 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
+  --color-brand: #ff5e00;
+  --color-brand-dark: #cc4b00;
 }
 
 @layer base {
   body {
-    @apply bg-[#09090b] text-zinc-300 antialiased overflow-x-hidden;
+    @apply bg-[#0c0c0c] text-zinc-300 antialiased overflow-x-hidden;
     font-family: 'Inter', sans-serif;
   }
 }
 
 @layer components {
-  /* Solt Wagner / Framer Style Glass Panels */
+  /* Folioblox Style Glass Panels */
   .glass-card {
-    @apply bg-white/[0.02] border border-white/[0.05] backdrop-blur-md rounded-2xl overflow-hidden transition-all duration-300;
+    @apply bg-[#151515] border border-white/5 rounded-3xl overflow-hidden transition-all duration-300;
   }
   
   .glass-card:hover {
-    @apply bg-white/[0.04] border-white/[0.1] shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+    @apply bg-[#1a1a1a] shadow-2xl;
   }
 
-  /* Sleek Pill Button */
+  .service-card {
+    @apply bg-[#151515] rounded-2xl p-8 border-t-2 border-t-[#ff5e00] transition-transform duration-300 hover:-translate-y-2;
+  }
+
+  /* Folioblox Pill Button */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-zinc-100 text-zinc-900 font-medium transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-black font-semibold transition-all duration-300 hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)];
   }
   
+  .btn-brand {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#ff5e00] text-white font-semibold transition-all duration-300 hover:bg-[#cc4b00] hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,94,0,0.3)];
+  }
+
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/5 text-zinc-200 border border-white/10 font-medium transition-all duration-300 hover:bg-white/10 hover:scale-105 active:scale-95;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-black/20 backdrop-blur-md text-white border border-white/20 font-medium transition-all duration-300 hover:bg-white/10 hover:scale-105 active:scale-95;
   }
 
   /* Text Gradient */
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60;
+  }
+
+  /* Huge Rounded Container */
+  .hero-container {
+    @apply bg-gradient-to-br from-[#ff5e00] via-[#c22900] to-[#2a0000] rounded-[40px] relative overflow-hidden;
+  }
+  
+  .cta-container {
+    @apply bg-gradient-to-br from-[#ff5e00] to-[#990000] rounded-[40px] relative overflow-hidden;
   }
 }
 
@@ -41,12 +60,12 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090b; 
+  background: #0c0c0c; 
 }
 ::-webkit-scrollbar-thumb {
   background: #27272a; 
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46; 
+  background: #ff5e00; 
 }
