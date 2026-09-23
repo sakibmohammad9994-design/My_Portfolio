@@ -27,7 +27,7 @@ const HeroSection = () => {
 
         <div className="relative flex-grow flex items-center justify-center w-full max-w-[1400px] mx-auto min-h-[60vh] z-20">
           
-          {/* Overlapping Parallax Image - CHANGED TO ELLIPSE TO FADE TOP AND BOTTOM */}
+          {/* Overlapping Parallax Image - COMPOSITE LINEAR MASKS */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
             initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
@@ -40,11 +40,12 @@ const HeroSection = () => {
               alt={PERSONAL_INFO.name}
               className="w-full h-full object-cover object-[50%_20%] opacity-90 grayscale contrast-[1.2] mix-blend-multiply"
               style={{
-                /* Switched from 'circle' to 'ellipse' and tightened to 60%. 
-                   Because the container is tall, an ellipse will squish vertically,
-                   forcing the top and bottom to fade out perfectly symmetrically just like the left and right! */
-                maskImage: 'radial-gradient(ellipse at 50% 50%, black 20%, transparent 60%)',
-                WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, black 20%, transparent 60%)'
+                /* We layer two linear gradients and intersect them. 
+                   This keeps 90% of the image solid in the center, and ONLY blurs the outer 10% edges. */
+                maskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 100%), linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 100%), linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+                WebkitMaskComposite: 'source-in',
+                maskComposite: 'intersect'
               }}
             />
           </motion.div>
