@@ -19,40 +19,43 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="hero" className="w-full pt-6 px-6 max-w-[1400px] mx-auto min-h-screen flex flex-col relative z-10" ref={containerRef}>
-      <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-8 lg:px-16 mt-4 relative overflow-hidden">
+    <section id="hero" className="w-full min-h-screen flex flex-col relative z-10" ref={containerRef}>
+      {/* Removed rounded borders and margins so it perfectly hits the top of the browser */}
+      <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-6 lg:px-16 relative overflow-hidden">
         
         {/* Deep Abstract Glows */}
-        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/60 via-transparent to-transparent pointer-events-none z-10"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5e00]/40 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/50 via-transparent to-transparent pointer-events-none z-10"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5e00]/30 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
-        <div className="relative flex-grow flex items-center justify-center w-full min-h-[60vh] z-20">
+        <div className="relative flex-grow flex items-center justify-center w-full max-w-[1400px] mx-auto min-h-[60vh] z-20">
           
-          {/* Overlapping Parallax Image */}
+          {/* Overlapping Parallax Image - Fixed mask and entrance animation! */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: customEase }}
-            className="absolute right-0 bottom-0 w-full md:w-[60%] h-[90%] lg:h-[110%] z-10"
+            initial={{ opacity: 0, scale: 1.25, filter: "blur(20px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 2.2, ease: customEase }}
+            className="absolute right-0 bottom-0 w-full md:w-[50%] lg:w-[45%] h-[90%] lg:h-[105%] z-10"
           >
             <img 
               src="/sakib-bw-suit.png" 
               alt={PERSONAL_INFO.name}
-              className="w-full h-full object-cover object-top opacity-90 grayscale contrast-125 mix-blend-luminosity"
+              // Changed object-position so the face is perfectly centered and visible
+              className="w-full h-full object-cover object-[70%_20%] opacity-90 grayscale contrast-125 mix-blend-luminosity"
               style={{
-                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
+                // Less aggressive mask on the left so the face doesn't fade out!
+                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)',
                 WebkitMaskComposite: 'source-in',
                 maskComposite: 'intersect'
               }}
             />
           </motion.div>
 
-          {/* Overlapping Typography (Grid Breaker) */}
+          {/* Overlapping Typography (Grid Breaker) - Fixed width so it doesn't cover the face */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yText }}
-            className="absolute left-0 lg:left-10 w-full z-30 flex flex-col items-start pointer-events-none"
+            className="absolute left-0 lg:left-10 w-full lg:w-[65%] z-30 flex flex-col items-start pointer-events-none"
           >
             <div className="overflow-hidden mb-2">
               <motion.h2 
@@ -70,7 +73,7 @@ const HeroSection = () => {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.3, ease: customEase }}
-                className="text-[clamp(4rem,10vw,9rem)] font-black tracking-tighter text-white leading-[0.85] drop-shadow-2xl"
+                className="text-[clamp(3.5rem,8vw,8rem)] font-black tracking-tighter text-white leading-[0.85] drop-shadow-2xl"
               >
                 FULL-STACK
               </motion.h1>
@@ -80,7 +83,7 @@ const HeroSection = () => {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.2, delay: 0.4, ease: customEase }}
-                className="text-[clamp(4rem,10vw,9rem)] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 leading-[0.9] drop-shadow-2xl"
+                className="text-[clamp(3.5rem,8vw,8rem)] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 leading-[0.9] drop-shadow-2xl"
               >
                 DEVELOPER<span className="text-[#ff5e00]">.</span>
               </motion.h1>
@@ -90,12 +93,12 @@ const HeroSection = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.7, ease: customEase }}
-              className="flex items-center gap-6 pointer-events-auto"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pointer-events-auto"
             >
               <a href="#projects" className="btn-primary shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]">
                 View My Work
               </a>
-              <div className="hidden sm:block text-white/80 text-sm max-w-[200px] leading-snug font-medium">
+              <div className="text-white/80 text-sm max-w-[200px] leading-snug font-medium">
                 Designing invisible code & unforgettable experiences.
               </div>
             </motion.div>
@@ -108,7 +111,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8, ease: customEase }}
-          className="mt-auto grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-white/20 relative z-30"
+          className="mt-auto max-w-[1400px] mx-auto w-full grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-white/10 relative z-30"
         >
           {[
             { id: '01', text: 'Frontend React' },
