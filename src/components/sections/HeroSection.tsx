@@ -20,7 +20,6 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="w-full min-h-screen flex flex-col relative z-10" ref={containerRef}>
-      {/* Removed rounded borders and margins so it perfectly hits the top of the browser */}
       <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-6 lg:px-16 relative overflow-hidden">
         
         {/* Deep Abstract Glows */}
@@ -29,7 +28,7 @@ const HeroSection = () => {
 
         <div className="relative flex-grow flex items-center justify-center w-full max-w-[1400px] mx-auto min-h-[60vh] z-20">
           
-          {/* Overlapping Parallax Image - Fixed mask and entrance animation! */}
+          {/* Overlapping Parallax Image - PERFECT RADIAL MASK TO REMOVE BOX EDGES */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
             initial={{ opacity: 0, scale: 1.25, filter: "blur(20px)" }}
@@ -40,19 +39,16 @@ const HeroSection = () => {
             <img 
               src="/sakib-bw-suit.png" 
               alt={PERSONAL_INFO.name}
-              // Changed object-position so the face is perfectly centered and visible
               className="w-full h-full object-cover object-[70%_20%] opacity-90 grayscale contrast-125 mix-blend-luminosity"
               style={{
-                // Less aggressive mask on the left so the face doesn't fade out!
-                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)',
-                WebkitMaskComposite: 'source-in',
-                maskComposite: 'intersect'
+                // Beautiful radial vignette mask - 100% transparent at the edges, fully solid in the middle
+                maskImage: 'radial-gradient(ellipse 95% 95% at 55% 45%, black 40%, transparent 100%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 95% 95% at 55% 45%, black 40%, transparent 100%)'
               }}
             />
           </motion.div>
 
-          {/* Overlapping Typography (Grid Breaker) - Fixed width so it doesn't cover the face */}
+          {/* Overlapping Typography (Grid Breaker) */}
           <motion.div 
             style={{ y: shouldReduceMotion ? 0 : yText }}
             className="absolute left-0 lg:left-10 w-full lg:w-[65%] z-30 flex flex-col items-start pointer-events-none"
