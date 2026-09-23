@@ -52,13 +52,13 @@
     @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-black/20 backdrop-blur-md text-white border border-white/20 font-medium transition-all duration-300 hover:bg-white/10 hover:scale-105 active:scale-95;
   }
 
-  /* Huge Rounded Containers */
+  /* Huge Rounded Containers - Fading from black at the top to blend with body */
   .hero-container {
-    @apply bg-gradient-to-br from-[#ff5e00] via-[#c22900] to-[#1a0000] rounded-[40px] relative overflow-hidden;
+    @apply bg-gradient-to-b from-[#0c0c0c] via-[#d93800] to-[#1a0000] rounded-[40px] relative overflow-hidden;
   }
   
   .cta-container {
-    @apply bg-gradient-to-br from-[#ff5e00] to-[#990000] rounded-[40px] relative overflow-hidden;
+    @apply bg-gradient-to-b from-[#0c0c0c] via-[#990000] to-[#0a0a0a] rounded-[40px] relative overflow-hidden;
   }
 }
 
