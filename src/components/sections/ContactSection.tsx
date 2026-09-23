@@ -1,17 +1,19 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, ArrowRight } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Mail, Github, Linkedin } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 
 const ContactSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="contact" className="w-full py-12 px-6 max-w-[1400px] mx-auto mb-12">
+    <section id="contact" className="w-full pt-12 pb-6 px-6 max-w-[1400px] mx-auto">
       <motion.div 
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="cta-container w-full min-h-[600px] flex flex-col items-center justify-center text-center p-8 md:p-16 relative"
+        className="cta-container w-full min-h-[600px] flex flex-col items-center justify-center text-center p-8 md:p-16 relative mb-6"
       >
         
         {/* Background Image (car-contact.jpg) */}
@@ -24,10 +26,10 @@ const ContactSection = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/80"></div>
         </div>
 
-        <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           <h3 className="text-white/80 font-bold tracking-widest uppercase text-sm mb-6">Start Your Next Project</h3>
           
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-tight drop-shadow-2xl">
+          <h2 className="text-[clamp(3rem,6vw,5.5rem)] font-black text-white mb-8 tracking-tighter leading-tight drop-shadow-2xl">
             Let's Bring Your <br/> Ideas to Life
           </h2>
           

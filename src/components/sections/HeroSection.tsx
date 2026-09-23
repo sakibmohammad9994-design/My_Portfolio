@@ -1,8 +1,10 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 
 const HeroSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="hero" className="w-full pt-6 px-6 max-w-[1400px] mx-auto min-h-screen flex flex-col relative z-10">
       <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-8 lg:px-16 mt-4 relative">
@@ -14,18 +16,19 @@ const HeroSection = () => {
           
           {/* Text Content */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex flex-col items-start text-left"
           >
             <h2 className="text-white/90 text-xl font-medium mb-2">Hey, I'm a</h2>
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-[0.95] mb-8 drop-shadow-2xl">
+            {/* Fluid typography clamp applied here */}
+            <h1 className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-tighter text-white leading-[0.95] mb-8 drop-shadow-2xl">
               Full-Stack <br/>
               Developer
             </h1>
             
-            <div className="flex flex-col sm:flex-row items-center gap-6 mt-8">
+            <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
               <a href="#projects" className="btn-primary">
                 View My Work
               </a>
@@ -34,7 +37,7 @@ const HeroSection = () => {
 
           {/* Right Side Text & Image overlay */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="relative h-full flex flex-col justify-center items-end"
@@ -67,7 +70,7 @@ const HeroSection = () => {
 
         {/* Bottom Stats / Nav items inside hero */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/20 relative z-10"

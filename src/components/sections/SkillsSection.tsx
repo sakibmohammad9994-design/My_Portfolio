@@ -1,16 +1,19 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { SKILLS_DATA } from '../../data/portfolioData';
 import { ArrowRight } from 'lucide-react';
+import { SpotlightCard } from '../ui/SpotlightCard';
 
 const SkillsSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="skills" className="w-full py-24 px-6 max-w-6xl mx-auto">
       
       {/* Split Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
         <motion.div 
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
@@ -23,7 +26,7 @@ const SkillsSection = () => {
         </motion.div>
 
         <motion.div 
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -47,28 +50,32 @@ const SkillsSection = () => {
         {SKILLS_DATA.map((skillGroup, index) => (
           <motion.div
             key={skillGroup.category}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="service-card flex flex-col h-full"
+            className="h-full"
           >
-            <div className="text-[#ff5e00] text-sm font-semibold mb-6">
-              {skillGroup.category}
-            </div>
-            <h3 className="text-xl font-bold text-white mb-6">
-              {skillGroup.category.split(' ')[0]} <br/> 
-              {skillGroup.category.split(' ').slice(1).join(' ')}
-            </h3>
-            
-            <ul className="space-y-3 mt-auto">
-              {skillGroup.skills.map(skill => (
-                <li key={skill.name} className="text-zinc-400 text-sm flex items-start">
-                  <span className="text-[#ff5e00] mr-2">•</span>
-                  {skill.name}
-                </li>
-              ))}
-            </ul>
+            <SpotlightCard className="service-card flex flex-col h-full">
+              <div className="relative z-10">
+                <div className="text-[#ff5e00] text-sm font-semibold mb-6">
+                  {skillGroup.category}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-6">
+                  {skillGroup.category.split(' ')[0]} <br/> 
+                  {skillGroup.category.split(' ').slice(1).join(' ')}
+                </h3>
+                
+                <ul className="space-y-3 mt-auto">
+                  {skillGroup.skills.map(skill => (
+                    <li key={skill.name} className="text-zinc-400 text-sm flex items-start">
+                      <span className="text-[#ff5e00] mr-2">•</span>
+                      {skill.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </SpotlightCard>
           </motion.div>
         ))}
       </div>
