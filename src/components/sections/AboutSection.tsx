@@ -92,7 +92,7 @@ const AboutSection = () => {
           className="md:col-span-1 aspect-[3/4] relative group flex items-center justify-center"
         >
           <img 
-            src="/sakib-outdoors-1.png" 
+            src={`${import.meta.env.BASE_URL}sakib-outdoors-1.png`} 
             alt="Sakib outdoors" 
             className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
             style={{

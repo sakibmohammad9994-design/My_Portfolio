@@ -36,7 +36,7 @@ const HeroSection = () => {
             className="absolute right-0 lg:-right-10 bottom-0 w-full md:w-[65%] lg:w-[60%] h-full z-10 flex items-end justify-end"
           >
             <img 
-              src="/sakib-bw-suit.png" 
+              src={`${import.meta.env.BASE_URL}sakib-bw-suit.png`} 
               alt={PERSONAL_INFO.name}
               className="w-full h-full object-cover object-[50%_20%] opacity-90 grayscale contrast-[1.2] mix-blend-multiply"
               style={{
