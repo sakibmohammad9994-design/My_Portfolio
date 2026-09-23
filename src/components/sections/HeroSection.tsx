@@ -1,96 +1,131 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { PERSONAL_INFO } from '../../data/portfolioData';
+
+const customEase = [0.16, 1, 0.3, 1]; // Ultra-smooth Apple-style easing
 
 const HeroSection = () => {
   const shouldReduceMotion = useReducedMotion();
+  const containerRef = useRef(null);
+  
+  // Parallax setup
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="hero" className="w-full pt-6 px-6 max-w-[1400px] mx-auto min-h-screen flex flex-col relative z-10">
-      <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-8 lg:px-16 mt-4 relative">
+    <section id="hero" className="w-full pt-6 px-6 max-w-[1400px] mx-auto min-h-screen flex flex-col relative z-10" ref={containerRef}>
+      <div className="hero-container flex-grow flex flex-col pt-32 pb-12 px-8 lg:px-16 mt-4 relative overflow-hidden">
         
-        {/* Abstract shapes inside hero */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-black/40 to-transparent pointer-events-none"></div>
+        {/* Deep Abstract Glows */}
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/60 via-transparent to-transparent pointer-events-none z-10"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff5e00]/40 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center flex-grow relative z-10">
+        <div className="relative flex-grow flex items-center justify-center w-full min-h-[60vh] z-20">
           
-          {/* Text Content */}
+          {/* Overlapping Parallax Image */}
           <motion.div 
-            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-start text-left"
+            style={{ y: shouldReduceMotion ? 0 : yImage, opacity }}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: customEase }}
+            className="absolute right-0 bottom-0 w-full md:w-[60%] h-[90%] lg:h-[110%] z-10"
           >
-            <h2 className="text-white/90 text-xl font-medium mb-2">Hey, I'm a</h2>
-            {/* Fluid typography clamp applied here */}
-            <h1 className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-tighter text-white leading-[0.95] mb-8 drop-shadow-2xl">
-              Full-Stack <br/>
-              Developer
-            </h1>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
-              <a href="#projects" className="btn-primary">
-                View My Work
-              </a>
-            </div>
+            <img 
+              src="/sakib-bw-suit.png" 
+              alt={PERSONAL_INFO.name}
+              className="w-full h-full object-cover object-top opacity-90 grayscale contrast-125 mix-blend-luminosity"
+              style={{
+                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%), linear-gradient(to left, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
+                WebkitMaskComposite: 'source-in',
+                maskComposite: 'intersect'
+              }}
+            />
           </motion.div>
 
-          {/* Right Side Text & Image overlay */}
+          {/* Overlapping Typography (Grid Breaker) */}
           <motion.div 
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="relative h-full flex flex-col justify-center items-end"
+            style={{ y: shouldReduceMotion ? 0 : yText }}
+            className="absolute left-0 lg:left-10 w-full z-30 flex flex-col items-start pointer-events-none"
           >
-            <div className="max-w-xs text-right relative z-20 mb-8 lg:mb-0 lg:absolute lg:top-1/4 lg:-left-20 bg-black/20 backdrop-blur-md p-6 rounded-3xl border border-white/10 shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-3 leading-tight">
-                Great code should feel invisible.
-              </h3>
-              <p className="text-white/80 text-sm leading-relaxed">
-                From scalable backends to intuitive interfaces, I build solutions that connect and perform.
-              </p>
+            <div className="overflow-hidden mb-2">
+              <motion.h2 
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2, ease: customEase }}
+                className="text-white/90 text-xl md:text-2xl font-semibold tracking-wide uppercase"
+              >
+                Hey, I'm {PERSONAL_INFO.name.split(' ')[0]}
+              </motion.h2>
             </div>
             
-            <div className="relative w-full max-w-lg aspect-square lg:aspect-[4/5] mx-auto z-10">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#c22900]/80 to-transparent rounded-full blur-3xl -z-10 mix-blend-overlay"></div>
-              {/* Image using panjabi-hero.jpg */}
-              <img 
-                src="/panjabi-hero.jpg" 
-                alt={PERSONAL_INFO.name}
-                className="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl grayscale-[20%] contrast-110"
-                style={{
-                  maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
-                  WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)'
-                }}
-              />
+            <div className="overflow-hidden">
+              <motion.h1 
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.2, delay: 0.3, ease: customEase }}
+                className="text-[clamp(4rem,10vw,9rem)] font-black tracking-tighter text-white leading-[0.85] drop-shadow-2xl"
+              >
+                FULL-STACK
+              </motion.h1>
             </div>
+            <div className="overflow-hidden mb-8">
+              <motion.h1 
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.2, delay: 0.4, ease: customEase }}
+                className="text-[clamp(4rem,10vw,9rem)] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30 leading-[0.9] drop-shadow-2xl"
+              >
+                DEVELOPER<span className="text-[#ff5e00]">.</span>
+              </motion.h1>
+            </div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.7, ease: customEase }}
+              className="flex items-center gap-6 pointer-events-auto"
+            >
+              <a href="#projects" className="btn-primary shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]">
+                View My Work
+              </a>
+              <div className="hidden sm:block text-white/80 text-sm max-w-[200px] leading-snug font-medium">
+                Designing invisible code & unforgettable experiences.
+              </div>
+            </motion.div>
           </motion.div>
 
         </div>
 
-        {/* Bottom Stats / Nav items inside hero */}
+        {/* Bottom Stats Inside Hero */}
         <motion.div 
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/20 relative z-10"
+          transition={{ duration: 1, delay: 0.8, ease: customEase }}
+          className="mt-auto grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-white/20 relative z-30"
         >
-          <div>
-            <div className="text-[#ff9e66] text-xs font-bold mb-1">#01</div>
-            <div className="text-white text-sm font-medium">Frontend React</div>
-          </div>
-          <div>
-            <div className="text-[#ff9e66] text-xs font-bold mb-1">#02</div>
-            <div className="text-white text-sm font-medium">Backend Systems</div>
-          </div>
-          <div>
-            <div className="text-[#ff9e66] text-xs font-bold mb-1">#03</div>
-            <div className="text-white text-sm font-medium">AI & RAG Integrations</div>
-          </div>
-          <div>
-            <div className="text-[#ff9e66] text-xs font-bold mb-1">#04</div>
-            <div className="text-white text-sm font-medium">Software Architecture</div>
-          </div>
+          {[
+            { id: '01', text: 'Frontend React' },
+            { id: '02', text: 'Backend Systems' },
+            { id: '03', text: 'AI & RAG Integrations' },
+            { id: '04', text: 'Software Architecture' }
+          ].map((stat, i) => (
+            <motion.div 
+              key={stat.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 + (i * 0.1), ease: customEase }}
+            >
+              <div className="text-[#ff5e00] text-xs font-black tracking-widest mb-1">#{stat.id}</div>
+              <div className="text-white text-sm font-medium">{stat.text}</div>
+            </motion.div>
+          ))}
         </motion.div>
         
       </div>

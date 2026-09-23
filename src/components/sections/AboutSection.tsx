@@ -1,32 +1,70 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { ArrowRight } from 'lucide-react';
 
+const customEase = [0.16, 1, 0.3, 1];
+
 const AboutSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="about" className="w-full py-32 px-6 max-w-6xl mx-auto">
       
-      {/* Split Header layout like "Behind the Designs" */}
+      {/* Split Header layout */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="max-w-md"
-        >
-          <h3 className="text-[#ff5e00] font-bold text-sm tracking-wider uppercase mb-4">Behind the Code</h3>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-            Shaping <br/> Experiences That <br/> Make Life Simpler
+        <div className="max-w-md">
+          <div className="overflow-hidden mb-4">
+            <motion.h3 
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: customEase }}
+              className="text-[#ff5e00] font-bold text-sm tracking-wider uppercase"
+            >
+              Behind the Code
+            </motion.h3>
+          </div>
+          
+          <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] font-bold tracking-tight text-white leading-[1.05]">
+            <div className="overflow-hidden">
+              <motion.div 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1, ease: customEase }}
+              >
+                Shaping
+              </motion.div>
+            </div>
+            <div className="overflow-hidden">
+              <motion.div 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1, delay: 0.1, ease: customEase }}
+              >
+                Experiences That
+              </motion.div>
+            </div>
+            <div className="overflow-hidden text-zinc-500">
+              <motion.div 
+                initial={{ y: "100%" }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1, delay: 0.2, ease: customEase }}
+              >
+                Make Life Simpler
+              </motion.div>
+            </div>
           </h2>
-        </motion.div>
+        </div>
 
         <motion.div 
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 1, delay: 0.3, ease: customEase }}
           className="max-w-md flex flex-col items-start md:items-end text-left md:text-right"
         >
           <p className="text-zinc-400 text-lg mb-6 leading-relaxed">
@@ -47,26 +85,26 @@ const AboutSection = () => {
         
         {/* Main Photo Card (Tall) */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 1.2, delay: 0.2, ease: customEase }}
           className="md:col-span-1 rounded-[32px] overflow-hidden aspect-[3/4] relative group"
         >
           <img 
-            src="/beach-about.png" 
-            alt="Sakib at the beach" 
+            src="/sakib-outdoors-1.png" 
+            alt="Sakib outdoors" 
             className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80"></div>
         </motion.div>
 
         {/* Bio Text Card */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 1.2, delay: 0.4, ease: customEase }}
           className="md:col-span-2 glass-card p-10 flex flex-col justify-center"
         >
           <h3 className="text-2xl font-bold text-white mb-6">My Story</h3>
