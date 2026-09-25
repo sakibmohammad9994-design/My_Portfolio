@@ -16,12 +16,12 @@ const ContactSection = () => {
         className="cta-container w-full min-h-[600px] flex flex-col items-center justify-center text-center p-8 md:p-16 relative mb-6"
       >
         
-        {/* Background Image (car-contact.jpg) */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/car-contact.jpg" 
+            src={`${import.meta.env.BASE_URL}contact-sakib.jpg`} 
             alt="Sakib" 
-            className="w-full h-full object-cover object-center opacity-30 mix-blend-overlay grayscale-[20%]"
+            className="w-full h-full object-cover object-[50%_40%] opacity-40 grayscale-[50%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/80"></div>
         </div>
